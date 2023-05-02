@@ -4,17 +4,33 @@ import GithubContext from "../context/github/GithubContext";
 import { Link, useParams } from "react-router-dom";
 import Spinner from '../components/layout/Spinner';
 import RepoList from '../components/repos/RepoList';
+import {getUser, getUserRepos} from '../context/github/GithubActions';
 
 
 const User = () => {
-    const {getUser, user, loading, getUserRepos, repos} = useContext(GithubContext)
+    const { user, loading, repos, dispatch} = useContext(GithubContext)
     const params = useParams();
+    
 
+/* eslint-disable */
     useEffect(() => {
-    getUser(params.login);
-    getUserRepos(params.login)
+      dispatch({type: 'SET_LOADING'});
+    const getUserData = async () => {
+     const userData = await getUser(params.login);
+      dispatch({
+        type: 'GET_USER',
+        payload: userData});
 
+        const getLalala = await getUserRepos(params.login);
+    dispatch({
+      type: 'GET_REPOS',
+      payload: getLalala})
+    }
+    
+    getUserData();
+    
     }, []);
+/* eslint-enable */
 
     const {name, type, avatar_url, location, bio, blog, twitter_username, login, html_url, followers, following, public_repos, public_gists, hireable} = user;
 
@@ -50,7 +66,7 @@ if (loading) {
               )}</h1>
               <p>{bio}</p>
               <div className="mt-4 card-actions">
-                <a href={html_url} target='_blank' rel="noreferer" className="btn btn-outline">Visit github profile</a>
+                <a href={html_url} target='_blank' rel="noreferrer" className="btn btn-outline">Visit github profile</a>
               </div>
             </div>
             <div className="w-full rounded-lg shadow-md bg-base-100 stats">
@@ -76,7 +92,7 @@ if (loading) {
                     <a 
                     href={`https://${blog}`} 
                     target="_blank" 
-                    rel="noreferer">{blog}</a>
+                    rel="noreferrer">{blog}</a>
                   </div>
                 </div>
               )}
@@ -89,7 +105,7 @@ if (loading) {
                     <a 
                     href={`https://twitter.com/${twitter_username}`} 
                     target="_blank" 
-                    rel="noreferer">{twitter_username}</a>
+                    rel="noreferrer">{twitter_username}</a>
                   </div>
                 </div>
               )}
