@@ -4,7 +4,7 @@ import GithubContext from "../context/github/GithubContext";
 import { Link, useParams } from "react-router-dom";
 import Spinner from '../components/layout/Spinner';
 import RepoList from '../components/repos/RepoList';
-import {getUser, getUserRepos} from '../context/github/GithubActions';
+import {getUserAndRepos} from '../context/github/GithubActions';
 
 
 const User = () => {
@@ -15,20 +15,13 @@ const User = () => {
 /* eslint-disable */
     useEffect(() => {
       dispatch({type: 'SET_LOADING'});
-    const getUserData = async () => {
-     const userData = await getUser(params.login);
+    const getUserDataAndRepos = async () => {
+     const userData = await getUserAndRepos(params.login);
       dispatch({
-        type: 'GET_USER',
+        type: 'GET_USER_AND_REPOS',
         payload: userData});
-
-        const getLalala = await getUserRepos(params.login);
-    dispatch({
-      type: 'GET_REPOS',
-      payload: getLalala})
-    }
-    
-    getUserData();
-    
+      }
+    getUserDataAndRepos();
     }, []);
 /* eslint-enable */
 
