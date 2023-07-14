@@ -13,7 +13,7 @@ const UserSearch = () => {
     const handleSubmit = async (e)=> {
         e.preventDefault();
     if (text === "") {
-        setAlert("pls, type sth bro ㅠㅠ ", 'error')
+        setAlert("pls, type sth :( ", 'error')
     } else {
         dispatch({type: 'SET_LOADING'})
         const users = await searchUsers(text)
