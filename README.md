@@ -8,5 +8,6 @@ This app is light github clone in which you can search for github accounts, open
 Run locally:
 
 ```sh
+npm install
 npm start
 ```
